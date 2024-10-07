@@ -29,7 +29,7 @@ client1.on_message = on_message
 
 
 st.title("Interfaces Multimodales")
-st.subheader("CONTROL POR VOZ")
+st.subheader("INTERACCIÓN POR VOZ")
 
 image = Image.open('voice_ctrl.jpg')
 
@@ -74,8 +74,14 @@ if result:
         st.write(result.get("GET_TEXT"))
         client1.on_publish = on_publish                            
         client1.connect(broker,port)  
-        message =json.dumps({"Act1":result.get("GET_TEXT").strip()})
-        ret= client1.publish("voice_ctrl", message)
+        #message =json.dumps({"Act1":result.get("GET_TEXT").strip()})
+        #ret= client1.publish("voice_ctrl", message)
+        if (result.get("GET_TEXT").strip()=="verde")):
+            message =json.dumps({"accion":"on"})
+        if (result.get("GET_TEXT").strip()=="negro")):
+            message =json.dumps({"accion":"off"})    
+        
+        client1.publish("remote", message)
 
     
     try:
