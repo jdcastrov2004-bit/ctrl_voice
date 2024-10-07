@@ -78,9 +78,10 @@ if result:
         #ret= client1.publish("voice_ctrl", message)
         if (result.get("GET_TEXT").strip()=="camisa verde"):
             message =json.dumps({"accion":"on"})
-        if (result.get("GET_TEXT").strip()=="camisa negra"):
+        elif (result.get("GET_TEXT").strip()=="camisa negra"):
             message =json.dumps({"accion":"off"})    
-        
+        else:
+             message =json.dumps({"accion":"None"})
         client1.publish("remote", message)
 
     
