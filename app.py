@@ -76,9 +76,9 @@ if result:
         client1.connect(broker,port)  
         #message =json.dumps({"Act1":result.get("GET_TEXT").strip()})
         #ret= client1.publish("voice_ctrl", message)
-        if (result.get("GET_TEXT").strip()=="verde"):
+        if (result.get("GET_TEXT").strip()=="camisa verde"):
             message =json.dumps({"accion":"on"})
-        if (result.get("GET_TEXT").strip()=="negro"):
+        if (result.get("GET_TEXT").strip()=="camisa negra"):
             message =json.dumps({"accion":"off"})    
         
         client1.publish("remote", message)
