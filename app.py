@@ -77,11 +77,13 @@ if result:
         #message =json.dumps({"Act1":result.get("GET_TEXT").strip()})
         #ret= client1.publish("voice_ctrl", message)
         if (result.get("GET_TEXT").strip()=="camisa verde"):
-            message =json.dumps({"accion/hub":"on"})
+            #message =json.dumps({"accion/hub":"on"})
+            client1.publish("accion/hub", "on")
         elif (result.get("GET_TEXT").strip()=="camisa negra"):
-            message =json.dumps({"accion/hub":"off"})    
+            #message =json.dumps({"accion/hub":"off"}) 
+            client1.publish("accion/hub", "off")
         else:
-             message =json.dumps({"accion/hub":"None"})
+             #message =json.dumps({"accion/hub":"None"})
         client1.publish("remote", message)
 
     
