@@ -79,25 +79,40 @@ st.markdown("<div class='decoration-bar'></div>", unsafe_allow_html=True)
 st.title("INTERFAZ")
 st.markdown("<div class='decoration-bar'></div>", unsafe_allow_html=True)
 
-col1, col2, col3 = st.columns([1, 1, 1])
+col1, col2 = st.columns([1, 2])
 
 with col1:
     image = Image.open('voice_ctrl.jpg')
     st.image(image, width=200)
 
 with col2:
-    if st.button("Nacer/Morir"):
-        client1.on_publish = on_publish
-        client1.connect(broker, port)
-        message = json.dumps({"Act1": "nacer" if time.time() % 2 == 0 else "morir"})
-        ret = client1.publish("voice/cosplay", message)
-
-with col3:
-    if st.button("Apagar/Decaer"):
-        client1.on_publish = on_publish
-        client1.connect(broker, port)
-        message = json.dumps({"Act1": "apagar" if time.time() % 2 == 0 else "decaer"})
-        ret = client1.publish("voice/cosplay", message)
+    btn_col1, btn_col2 = st.columns(2)
+    
+    with btn_col1:
+        if st.button("Nacer"):
+            client1.on_publish = on_publish
+            client1.connect(broker, port)
+            message = json.dumps({"Act1": "nacer"})
+            ret = client1.publish("voice/cosplay", message)
+            
+        if st.button("Morir"):
+            client1.on_publish = on_publish
+            client1.connect(broker, port)
+            message = json.dumps({"Act1": "morir"})
+            ret = client1.publish("voice/cosplay", message)
+            
+    with btn_col2:
+        if st.button("Apagar"):
+            client1.on_publish = on_publish
+            client1.connect(broker, port)
+            message = json.dumps({"Act1": "apagar"})
+            ret = client1.publish("voice/cosplay", message)
+            
+        if st.button("Decaer"):
+            client1.on_publish = on_publish
+            client1.connect(broker, port)
+            message = json.dumps({"Act1": "decaer"})
+            ret = client1.publish("voice/cosplay", message)
 
 stt_button = Button(label="▶️ INICIAR", width=200)
 stt_button.js_on_event("button_click", CustomJS(code="""
