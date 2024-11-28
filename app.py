@@ -98,7 +98,7 @@ with col2:
         if st.button("Morir"):
             client1.on_publish = on_publish
             client1.connect(broker, port)
-            message = json.dumps({"Act1": "morir"})
+            message = json.dumps({"Act1": "muerte"})
             ret = client1.publish("voice/cosplay", message)
             
     with btn_col2:
@@ -111,7 +111,7 @@ with col2:
         if st.button("Decaer"):
             client1.on_publish = on_publish
             client1.connect(broker, port)
-            message = json.dumps({"Act1": "decaer"})
+            message = json.dumps({"Act1": "ocaso"})
             ret = client1.publish("voice/cosplay", message)
 
 stt_button = Button(label="▶️ INICIAR", width=200)
