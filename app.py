@@ -82,7 +82,7 @@ st.markdown("<div class='decoration-bar'></div>", unsafe_allow_html=True)
 col1, col2 = st.columns([1, 2])
 
 with col1:
-    image = Image.open('voice_ctrl.jpg')
+    image = Image.open('Interfaz_2024.png')
     st.image(image, width=200)
 
 with col2:
