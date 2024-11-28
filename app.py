@@ -105,7 +105,7 @@ with col2:
         if st.button("Apagar"):
             client1.on_publish = on_publish
             client1.connect(broker, port)
-            message = json.dumps({"Act1": "apagar"})
+            message = json.dumps({"Act1": "apaga"})
             ret = client1.publish("voice/cosplay", message)
             
         if st.button("Decaer"):
