@@ -61,7 +61,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 def on_publish(client, userdata, result):
-    st.success("Datos transmitidos exitosamente")
+    #st.success("Datos transmitidos exitosamente")
     pass
 
 def on_message(client, userdata, message):
