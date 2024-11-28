@@ -76,7 +76,7 @@ client1 = paho.Client("GIT-HUBC")
 client1.on_message = on_message
 
 st.markdown("<div class='decoration-bar'></div>", unsafe_allow_html=True)
-st.title("INTERFAZ")
+st.title("INTERFAZ DE INTERACCIÓN")
 st.markdown("<div class='decoration-bar'></div>", unsafe_allow_html=True)
 
 col1, col2 = st.columns([1, 2])
