@@ -11,7 +11,6 @@ import json
 from gtts import gTTS
 from googletrans import Translator
 
-# Configuración de tema futurista
 st.set_page_config(
     page_title="Voice Control Interface",
     page_icon="🎙️",
@@ -19,11 +18,13 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Estilos CSS personalizados
 st.markdown("""
     <style>
     .main {
-        background: linear-gradient(45deg, #1a1a2e, #16213e);
+        background-image: url("Interfaz_2024.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
         color: #e94560;
     }
     .stButton>button {
@@ -32,6 +33,7 @@ st.markdown("""
         border: 2px solid #e94560;
         border-radius: 25px;
         padding: 15px 30px;
+        margin: 10px;
         transition: all 0.3s ease;
     }
     .stButton>button:hover {
@@ -39,7 +41,7 @@ st.markdown("""
         color: #0f3460;
         box-shadow: 0 0 15px #e94560;
     }
-    h1, h2, h3 {
+    h1 {
         color: #e94560 !important;
         text-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
         font-family: 'Arial', sans-serif;
@@ -55,20 +57,6 @@ st.markdown("""
         50% { opacity: 1; }
         100% { opacity: 0.6; }
     }
-    .status-indicator {
-        width: 10px;
-        height: 10px;
-        background-color: #e94560;
-        border-radius: 50%;
-        display: inline-block;
-        margin-right: 10px;
-        animation: blink 1.5s infinite;
-    }
-    @keyframes blink {
-        0% { opacity: 0.2; }
-        50% { opacity: 1; }
-        100% { opacity: 0.2; }
-    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -80,34 +68,38 @@ def on_message(client, userdata, message):
     global message_received
     time.sleep(2)
     message_received = str(message.payload.decode("utf-8"))
-    st.write(f"📡 Mensaje recibido: {message_received}")
+    st.write(f"📡 {message_received}")
 
 broker = "157.230.214.127"
 port = 1883
 client1 = paho.Client("GIT-HUBC")
 client1.on_message = on_message
 
-# Interfaz principal
 st.markdown("<div class='decoration-bar'></div>", unsafe_allow_html=True)
-st.title("🎙️ CONTROL POR VOZ INTELIGENTE")
+st.title("INTERFAZ")
 st.markdown("<div class='decoration-bar'></div>", unsafe_allow_html=True)
 
-# Contenedor para la imagen y el botón
-col1, col2 = st.columns([1, 2])
+col1, col2, col3 = st.columns([1, 1, 1])
 
 with col1:
     image = Image.open('voice_ctrl.jpg')
     st.image(image, width=200)
 
 with col2:
-    st.markdown("<div class='status-indicator'></div> Sistema Activo", unsafe_allow_html=True)
-    st.markdown("### Instrucci-ones")
-    st.markdown("1. Presiona el botón para iniciar")
-    st.markdown("2. Habla claramente al micrófono")
-    st.markdown("3. Espera la confirmación del sistema")
+    if st.button("Nacer/Morir"):
+        client1.on_publish = on_publish
+        client1.connect(broker, port)
+        message = json.dumps({"Act1": "nacer" if time.time() % 2 == 0 else "morir"})
+        ret = client1.publish("voice/cosplay", message)
 
-# Botón de control por voz
-stt_button = Button(label="▶️ INICIAR RECONOCIMIENTO", width=200)
+with col3:
+    if st.button("Apagar/Decaer"):
+        client1.on_publish = on_publish
+        client1.connect(broker, port)
+        message = json.dumps({"Act1": "apagar" if time.time() % 2 == 0 else "decaer"})
+        ret = client1.publish("voice/cosplay", message)
+
+stt_button = Button(label="▶️ INICIAR", width=200)
 stt_button.js_on_event("button_click", CustomJS(code="""
     var recognition = new webkitSpeechRecognition();
     recognition.continuous = true;
@@ -137,16 +129,15 @@ result = streamlit_bokeh_events(
 
 if result:
     if "GET_TEXT" in result:
-        st.markdown("""
+        st.markdown(f"""
             <div style='background-color: rgba(15, 52, 96, 0.5); 
                         padding: 20px; 
                         border-radius: 10px; 
                         border: 1px solid #e94560;
                         margin: 20px 0;'>
-                <h3 style='color: #e94560; margin: 0;'>Texto Reconocido:</h3>
-                <p style='color: #fff; margin: 10px 0 0 0;'>{}</p>
+                <p style='color: #fff; margin: 0;'>{result.get("GET_TEXT")}</p>
             </div>
-        """.format(result.get("GET_TEXT")), unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
         
         client1.on_publish = on_publish
         client1.connect(broker, port)
