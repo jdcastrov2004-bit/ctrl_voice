@@ -89,13 +89,13 @@ with col2:
     btn_col1, btn_col2 = st.columns(2)
     
     with btn_col1:
-        if st.button("Nacer"):
+        if st.button("Verde"):
             client1.on_publish = on_publish
             client1.connect(broker, port)
             message = json.dumps({"Act1": "nacer"})
             ret = client1.publish("voice/cosplay", message)
             
-        if st.button("Morir"):
+        if st.button("Rojo"):
             client1.on_publish = on_publish
             client1.connect(broker, port)
             message = json.dumps({"Act1": "morir"})
@@ -108,7 +108,7 @@ with col2:
             message = json.dumps({"Act1": "Apagar"})
             ret = client1.publish("voice/cosplay", message)
             
-        if st.button("Decaer"):
+        if st.button("Azul"):
             client1.on_publish = on_publish
             client1.connect(broker, port)
             message = json.dumps({"Act1": "decaer"})
