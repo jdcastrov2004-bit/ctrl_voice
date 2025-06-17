@@ -92,13 +92,13 @@ with col2:
         if st.button("Verde"):
             client1.on_publish = on_publish
             client1.connect(broker, port)
-            message = json.dumps({"Act1": "nacer"})
+            message = json.dumps({"Act1": "verde"})
             ret = client1.publish("voice/cosplay", message)
             
         if st.button("Rojo"):
             client1.on_publish = on_publish
             client1.connect(broker, port)
-            message = json.dumps({"Act1": "morir"})
+            message = json.dumps({"Act1": "rojo"})
             ret = client1.publish("voice/cosplay", message)
             
     with btn_col2:
@@ -111,7 +111,7 @@ with col2:
         if st.button("Azul"):
             client1.on_publish = on_publish
             client1.connect(broker, port)
-            message = json.dumps({"Act1": "decaer"})
+            message = json.dumps({"Act1": "azul"})
             ret = client1.publish("voice/cosplay", message)
 
 stt_button = Button(label="▶️ INICIAR", width=200)
